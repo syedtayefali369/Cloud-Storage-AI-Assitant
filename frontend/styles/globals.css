@@ -1,0 +1,4 @@
+/* Simple styled theme */
+html, body, #__next { height: 100%; margin: 0; padding: 0; }
+body { font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background: #0f172a; color: #e6eef8; }
+input, button { font-family: inherit; }
