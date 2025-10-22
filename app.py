@@ -1,18 +1,21 @@
-# app.py
 from flask import Flask, render_template, request, jsonify, send_from_directory
 import os
-import json
 from datetime import datetime
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
+
+# Use environment variable for secret key
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-key-123')
+
+# For Render, we need to handle file uploads differently since file system is ephemeral
 app.config['UPLOAD_FOLDER'] = 'uploads'
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 # Create upload directory if it doesn't exist
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
-# Mock AI responses
+# Your existing AI responses and user data remain the same
 ai_responses = {
     'list files': 'You have several files in your storage including documents, images, and archives.',
     'largest file': 'Your largest file is currently the vacation photos archive.',
@@ -22,7 +25,6 @@ ai_responses = {
     'default': "I can help you manage your cloud storage. Ask me about your files, storage usage, or help with file operations."
 }
 
-# Mock user data
 user_data = {
     'name': 'MD TAYEF ALI',
     'storage_used': 6.5,
@@ -36,6 +38,7 @@ user_data = {
     ]
 }
 
+# All your routes remain exactly the same
 @app.route('/')
 def index():
     return render_template('index.html', user=user_data)
@@ -45,14 +48,12 @@ def ai_chat():
     data = request.get_json()
     message = data.get('message', '').lower()
     
-    # Simple AI response logic
     response = ai_responses['default']
     for key in ai_responses:
         if key in message:
             response = ai_responses[key]
             break
     
-    # Add personalized greeting if user mentions their name
     if 'tayef' in message or 'md' in message:
         response = f"Hello {user_data['name']}! {response}"
     
@@ -72,7 +73,6 @@ def upload_file():
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(file_path)
         
-        # Add to user files (in a real app, you'd use a database)
         file_info = {
             'id': len(user_data['files']) + 1,
             'name': filename,
@@ -97,7 +97,6 @@ def delete_file(file_id):
     if file_to_delete:
         user_data['files'] = [f for f in user_data['files'] if f['id'] != file_id]
         
-        # Also delete the actual file (in a real application)
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], file_to_delete['name'])
         if os.path.exists(file_path):
             os.remove(file_path)
@@ -121,5 +120,7 @@ def download_file(file_id):
     
     return jsonify({'error': 'File not found'}), 404
 
+# Add this for production
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
