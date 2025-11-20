@@ -103,9 +103,10 @@ Save app.py in the root directory
 Save index.html in the templates directory
 
 Run the Application
-
+```
 bash
 python app.py
+```
 Access the Application
 Open your web browser and navigate to:
 
