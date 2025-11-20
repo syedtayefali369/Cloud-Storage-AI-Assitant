@@ -37,6 +37,7 @@ A full-stack web application that combines cloud storage management with an AI a
 - **Fetch API** - Backend communication
 
 ## Project Structure
+```
 cloud-storage-ai-assistant/
 │
 ├── app.py # Main Flask application
@@ -45,7 +46,7 @@ cloud-storage-ai-assistant/
 │ └── index.html # Main frontend template
 ├── README.md # Project documentation
 └── requirements.txt # Python dependencies
-
+```
 text
 
 ### File Descriptions
@@ -69,37 +70,43 @@ text
    mkdir cloud-storage-ai-assistant
    cd cloud-storage-ai-assistant
 Create Virtual Environment (Recommended)
-
+```
+```
 bash
 python -m venv venv
-
+```
+```
 # On Windows:
 venv\Scripts\activate
-
+```
+```
 # On macOS/Linux:
 source venv/bin/activate
 Install Dependencies
-
+```
+```
 bash
 pip install flask werkzeug
 Or create a requirements.txt file:
-
+```
 txt
 Flask==2.3.3
 Werkzeug==2.3.7
 Then install:
-
+```
 bash
 pip install -r requirements.txt
 Create Project Structure
-
+```
+```
 bash
 mkdir templates
 mkdir uploads
 Add the Application Files
-
+```
+```
 Save app.py in the root directory
-
+```
 Save index.html in the templates directory
 
 Run the Application
